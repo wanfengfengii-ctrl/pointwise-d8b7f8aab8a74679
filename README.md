@@ -40,3 +40,25 @@ python3 -B workbench.py init station.sqlite examples/rounds.json
 `collect(..., fail_at='before_intake_commit')` 和 `sign_window(..., fail_at='before_receipt')` 或 `fail_at='before_sign_commit'` 可在演练中制造指定事务点的 `sqlite3.OperationalError`。同轮同原窗复签直接返回固定成果和原首执。次班用 `retrieve_result` 读取归档副本，复核不需要设备库，后续巡检也不会改变旧件。
 
 `examples/rounds.json` 含两轮登记。`examples/shift.json` 演练接纳、轮末闭合和隔轮复领。`examples/touch.json` 用于核对只相触的覆盖。`examples/equal.json` 用于核对等值换页的独立出处。测试固定录制和操作次序，无时间或随机输入。
+
+## 换端移交
+
+`handoff` 提供离线移交入口，库连接沿用 `workbench.open_archive`。交接件是可原样传递的字节串，调用方经可信渠道送达。
+
+| 工作 | Python 入口 | 返回 |
+| --- | --- | --- |
+| 绑定终端 | `handoff.bind_terminal(db, terminal)` | `None` |
+| 交出本轮 | `handoff.export_cycle(db, cycle, recipient)` | 交接件字节串，或在途放页未结清时为 `busy` |
+| 接手本轮 | `handoff.import_cycle(db, bundle)` | 稳定的交接标识 |
+| 按原签发端领取 | `handoff.retrieve_issued(db, issuer, result_id)` | `SignedResult` 或 `None` |
+
+`bind_terminal` 固定本库编号，重复同号成功、改号抛 `ValueError`；绑定后本库已有签件归入本端编号域。交出成功时指定接收端、原页、未查结的放页资格、已签成果和首执一同冻结，旧端随即停收、停发新放页授权和停发新签，但仍可查账、领取已有成果和复领已签窗口。已授权且已在途的放页可在交出后完成，但只作用于交接件内对应原页，迟到的旧端回包不改变冻结件。
+
+交出提交后失答时，重开旧库并以同轮同接收端重取同一交接件。接班端一次提交导入整轮全部材料，失败不留部分轮；再次导入同件只复领标识，已取得的原页、放页进度和成果继续有效。错接收端、坏件、目标已有独立登记同号轮及与已接交接冲突的内容均抛 `ValueError`。接班端沿 `collect` 的 `PageRef` 入口按原记录器上的原页身份查结，再续收后页；复领原窗仍得旧成果、原签发端和原首执，新签使用接班端编号。
+
+```text
+python3 -B -m handoff.drill
+python3 -B verify_project.py
+```
+
+`handoff.drill` 用 `handoff_fixture.handoff_recording()` 的两轮固定录制演示甲 A2 实收但放页失答后的交出、接班、续收 A3、复签原窗、关设备后按签发端领取同号成果。`verify_project.py` 依次跑标准回归、单端演示、V1 对照和换端演练，任一失败以非零退出。

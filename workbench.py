@@ -14,6 +14,7 @@ from capture.ledger import initialize_intake
 from device.delivery import DeliverySchedule
 from device.recording import Recording, load_recording
 from device.slots import DeviceSlots, initialize_slots
+from handoff.store import initialize_handoff
 from rounds.registration import CycleRegistration, open_cycle
 from rounds.registry_store import initialize_registry
 from signing.commit import initialize_signing, sign_window
@@ -30,6 +31,7 @@ def open_archive(path: str | Path) -> sqlite3.Connection:
         initialize_intake(db)
         initialize_custody(db)
         initialize_signing(db)
+        initialize_handoff(db)
     except BaseException:
         db.close()
         raise

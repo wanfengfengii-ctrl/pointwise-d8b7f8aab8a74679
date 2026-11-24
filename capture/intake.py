@@ -7,6 +7,7 @@ from capture.page_checks import validate_current_page, validate_event_order
 from capture.resume import attempt_release, resume_release
 from device.slots import DeviceSlots
 from device.source_pages import PageRef, SourcePage
+from handoff.store import assert_not_frozen
 from rounds.channels import role_for_channel
 from rounds.registration import get_cycle
 
@@ -24,6 +25,7 @@ def collect(db: sqlite3.Connection, device: DeviceSlots, cycle: str, channel: st
         db.execute('BEGIN IMMEDIATE')
         registration = get_cycle(db, cycle)
         role_for_channel(registration.channels, channel)
+        assert_not_frozen(db, cycle)
         proposed = device.read_current(cycle, channel) if page is None else page
         if proposed is None:
             return None

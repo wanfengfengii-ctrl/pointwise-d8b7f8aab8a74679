@@ -35,6 +35,7 @@ class SignedResult:
 class SignOutcome:
     status: Literal['signed', 'pending', 'disjoint']
     result: SignedResult | None = None
+    issuer: str | None = None
 
 
 def build_signed_result(result_id: int, registration: CycleRegistration, window: TickWindow,
