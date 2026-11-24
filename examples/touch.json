@@ -1,0 +1,8 @@
+{
+  "pages": [
+    {"cycle":"R","channel":"T1","sequence":1,"page_id":"A1","kind":"reading","tick":10,"value":7,"provenance":"touch/t1/1"},
+    {"cycle":"R","channel":"T1","sequence":2,"page_id":"A2","kind":"terminal","tick":12,"value":null,"provenance":"touch/t1/end"},
+    {"cycle":"R","channel":"T2","sequence":1,"page_id":"B1","kind":"reading","tick":12,"value":11,"provenance":"touch/t2/1"},
+    {"cycle":"R","channel":"T2","sequence":2,"page_id":"B2","kind":"terminal","tick":14,"value":null,"provenance":"touch/t2/end"}
+  ]
+}

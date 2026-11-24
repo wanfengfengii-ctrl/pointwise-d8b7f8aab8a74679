@@ -1,0 +1,4 @@
+[
+  {"cycle": "R", "a": "T1", "b": "T2", "start": 10, "stop": 16},
+  {"cycle": "R2", "a": "T1", "b": "T2", "start": 10, "stop": 16}
+]

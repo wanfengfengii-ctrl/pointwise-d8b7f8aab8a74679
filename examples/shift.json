@@ -1,0 +1,13 @@
+{
+  "pages": [
+    {"cycle":"R","channel":"T1","sequence":1,"page_id":"A1","kind":"reading","tick":10,"value":7,"provenance":"early/t1/1"},
+    {"cycle":"R","channel":"T1","sequence":2,"page_id":"A2","kind":"reading","tick":12,"value":9,"provenance":"early/t1/2"},
+    {"cycle":"R","channel":"T1","sequence":3,"page_id":"A3","kind":"terminal","tick":14,"value":null,"provenance":"early/t1/end"},
+    {"cycle":"R","channel":"T2","sequence":1,"page_id":"B1","kind":"reading","tick":12,"value":11,"provenance":"early/t2/1"},
+    {"cycle":"R","channel":"T2","sequence":2,"page_id":"B2","kind":"terminal","tick":14,"value":null,"provenance":"early/t2/end"},
+    {"cycle":"R2","channel":"T1","sequence":1,"page_id":"A1","kind":"reading","tick":12,"value":16,"provenance":"late/t1/1"},
+    {"cycle":"R2","channel":"T1","sequence":2,"page_id":"A2","kind":"terminal","tick":14,"value":null,"provenance":"late/t1/end"},
+    {"cycle":"R2","channel":"T2","sequence":1,"page_id":"B1","kind":"reading","tick":12,"value":12,"provenance":"late/t2/1"},
+    {"cycle":"R2","channel":"T2","sequence":2,"page_id":"B2","kind":"terminal","tick":14,"value":null,"provenance":"late/t2/end"}
+  ]
+}
